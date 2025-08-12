@@ -203,7 +203,7 @@ html.night {
 
 .landscape .colTemp {
     font-size: 35.9px;
-    font-size: 7.1rem;
+    font-size: 5.1rem; /* original 7.1rem */
 }
 
 .landscape .colTime {
