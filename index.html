@@ -89,7 +89,37 @@
             window.setTimeout("refreshData()", refreshTime);
         }
 
+        // Ryan's edit 8-11-2025 - change to daily forecast instead of evey 3 hours
         function processForecastWeather(data) {
+                dataTimeZone = data.city.timezone;
+            
+                // Group forecasts by date
+                var daily = {};
+                data.list.forEach(function(forecast) {
+                    var dateKey = momentWithCorrectUtcOffset(new Date(forecast.dt * 1000)).format("YYYY-MM-DD");
+                    if (!daily[dateKey]) daily[dateKey] = [];
+                    daily[dateKey].push(forecast);
+                });
+            
+                // For each day, get min/max temps and update display
+                var days = Object.keys(daily).slice(0, forecastCount); // forecastCount = how many days to show
+                days.forEach(function(dateKey, i) {
+                    var forecasts = daily[dateKey];
+                    var min = Math.min.apply(null, forecasts.map(f => f.main.temp_min));
+                    var max = Math.max.apply(null, forecasts.map(f => f.main.temp_max));
+                    forecastsCells[i].temp.innerHTML = Math.round(max) + " / " + Math.round(min) + unitsSymbolHtml;
+                    forecastsCells[i].icon.className = getIconClassName(forecasts[0].weather[0], new Date(forecasts[0].dt * 1000));
+                    forecastsCells[i].desc.innerHTML = forecasts[0].weather[0].description;
+                    forecastsCells[i].time.innerHTML = momentWithCorrectUtcOffset(new Date(forecasts[0].dt * 1000)).format("ddd, MMM D");
+                    forecastsCells[i].temp.className = "colTemp";
+                    forecastsCells[i].icon.style.transform = null;
+                    forecastsCells[i].icon.style.webkitTransform = null;
+                });
+            
+                setMoonIconsRotation(data.city.coord.lat);
+            }
+        
+        /*function processForecastWeather(data) {
             dataTimeZone = data.city.timezone
 
             for (var i = 0; i < forecastCount; i++) {
@@ -107,7 +137,7 @@
             }
 
             setMoonIconsRotation(data.city.coord.lat)
-        }
+        }*/
 
         function getIconClassName(weather, date) {
             var isNight = weather.icon.slice(-1) === "n";
