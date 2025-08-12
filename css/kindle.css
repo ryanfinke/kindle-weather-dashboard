@@ -140,7 +140,7 @@ html.night {
 
 .colTemp {
     font-size: 50px;
-    font-size: 7.1rem;
+    font-size: 5.1rem; /* original: 7.1rem */
 }
 
 .colTime {
