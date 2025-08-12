@@ -114,7 +114,7 @@
                     forecastsCells[i].temp.innerHTML = Math.round(max) + " / " + Math.round(min) + unitsSymbolHtml;
                     forecastsCells[i].icon.className = getIconClassName(forecasts[0].weather[0], new Date(forecasts[0].dt * 1000));
                     forecastsCells[i].desc.innerHTML = forecasts[0].weather[0].description;
-                    forecastsCells[i].time.innerHTML = momentWithCorrectUtcOffset(new Date(forecasts[0].dt * 1000)).format("ddd, MMM D");
+                    forecastsCells[i].time.innerHTML = momentWithCorrectUtcOffset(new Date(forecasts[0].dt * 1000)).format("ddd");
                     forecastsCells[i].temp.className = "colTemp";
                     forecastsCells[i].icon.style.transform = null;
                     forecastsCells[i].icon.style.webkitTransform = null;
