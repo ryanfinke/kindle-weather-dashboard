@@ -67,16 +67,20 @@
         }();
 
 
+       // In refreshActualWeather and refreshForecastWeather, add a console.log to show the API data
+
         function refreshActualWeather() {
             jsonp.request(apiProtocol + "//api.openweathermap.org/data/2.5/weather?" + _apiParams + "&callback=jsonp.response" + "&_timestamp=" + (new Date()).getTime()
                 , function (data) {
+                    console.log("Actual weather API data:", data); // <-- Added line
                     processActualWeather(data);
                 }, "actual");
         }
-
+        
         function refreshForecastWeather() {
             jsonp.request(apiProtocol + "//api.openweathermap.org/data/2.5/forecast?" + _apiParams + "&callback=jsonp.response" + "&_timestamp=" + (new Date()).getTime()
                 , function (data) {
+                    console.log("Forecast weather API data:", data); // <-- Added line
                     processForecastWeather(data);
                 }, "forecast");
         }
